@@ -1,0 +1,47 @@
+:root {
+    --core-bg: #191b28;
+    --component-bg: #1c1e2e;
+    --icon-color: #737aae;
+    --msg-bg: #282c50;
+    --button-border-color: #4c77f4;
+    --chat-box: #232535;
+    --text-color: #99a0ad;
+    --seperator: #282a37;
+    --button-bg: #0e79f9;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--core-bg);
+    font-family: "Roboto", sans-serif;
+}
+
+*::-webkit-scrollbar {
+    display: none;
+} 
+
+.container {
+    max-width: 1600px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.top-bar {
+    padding: 20px;
+    width: 100%;
+    display: flex; 
+    justify-content: center;
+    background-color: var(--component-bg);
+}
+
+.main {
+    width: 100%;
+    display: flex;
+    flex-grow: 1;
+    overflow: hidden;
+}

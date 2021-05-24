@@ -1,0 +1,22 @@
+.offline-container {
+    width: 100vw;
+    height: 100vh; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column; 
+    color: #fff; 
+} 
+ 
+.cover-heading {
+    margin: 0;
+    margin-bottom: 10px;
+}
+
+.try-refresh {
+    font-size: 0.8rem;
+}
+
+p {
+    margin: 0; 
+}
