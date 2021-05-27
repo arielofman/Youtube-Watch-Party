@@ -30,18 +30,28 @@ body {
     flex-direction: column;
     overflow: hidden;
 }
-
-.top-bar {
-    padding: 20px;
-    width: 100%;
-    display: flex; 
-    justify-content: center;
-    background-color: var(--component-bg);
-}
-
-.main {
+ 
+.left-container {
     width: 100%;
     display: flex;
     flex-grow: 1;
     overflow: hidden;
+}
+
+
+.right-container {
+    display: flex;
+    flex-direction: row; 
+    height: 100%;
+}
+
+.right-wrapper { 
+    display: flex;
+    flex-direction: column;
+    flex-grow: 2;
+    height: 100%;
+}
+
+.bold { 
+    font-weight: 600;
 }

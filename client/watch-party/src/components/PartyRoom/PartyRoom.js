@@ -11,6 +11,7 @@ import './PartyRoom.css';
 import socketio from "socket.io-client";
 import Suggested from '../Suggested';
 import Offline from '../Offline';
+import TopBar from '../TopBar/TopBar';
 
 const SOCKET_URL = "http://localhost:5000";
 let socket = socketio.connect(SOCKET_URL);
@@ -26,9 +27,9 @@ function PartyRoom(props) {
 
     useEffect(() => {
         socket.emit('join', { username: username, roomId }, error => { });
- 
+
         // check if server is online
-        setServerStatus(socket.connected);  
+        setServerStatus(socket.connected);
 
         // TODO: Reconnection logic needs work
         // socket.on("connect", () => {
@@ -39,27 +40,40 @@ function PartyRoom(props) {
         socket.on("disconnect", () => {
             setServerStatus(socket.connected); // false
         });
- 
+
         dispatch(setRoomId({ id: roomId }))
 
     }, [])
 
 
-    return ( 
-        <>
-            {serverStatus === true ?
-                (<div className="container">
-                    {/* <div className="top-bar">
-                        Top Bar
-                    </div> */}
-                    <div className="main">
-                        <Suggested socket={socket} />
-                        <VideoPlayer socket={socket} />
-                        <ChatRoom socket={socket} />
-                    </div>
-                </div>) : (<Offline />)
-            }
-        </>
+    return (
+        <div className="container">
+            <div class="left-container">
+                <Suggested socket={socket} />
+           
+            <div class="right-wrapper">
+                <TopBar/>
+                <div class="right-container"> 
+                    <VideoPlayer socket={socket} />
+                    <ChatRoom socket={socket} />
+                </div>
+            </div>
+            </div>
+        </div>
+        // <>
+        //     {serverStatus === true ?
+        //         (<div className="container">
+        //             <div className="top-bar">
+        //                 Top Bard
+        //             </div>
+        //             <div className="main">
+        //                 <Suggested socket={socket} />
+        //                 <VideoPlayer socket={socket} />
+        //                 <ChatRoom socket={socket} />
+        //             </div>
+        //         </div>) : (<Offline />)
+        //     }
+        // </>
     )
 }
 

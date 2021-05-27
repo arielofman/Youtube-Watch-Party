@@ -6,6 +6,7 @@ export const VideoPlayerSlice = createSlice({
     name: 'videoPlayer',
     initialState: {
         videoURL: "http://www.youtube.com/watch?v=5_ARibfCMhw",
+        playingTitle: '',
         isPlaying: false,
     },
     reducers: {
@@ -15,10 +16,13 @@ export const VideoPlayerSlice = createSlice({
         setVideoIsPlaying: (state, action) => {
             state.isPlaying = action.payload.playing
         },
+        setPlayingTitle: (state, action) => {
+            state.playingTitle = action.payload.playingTitle
+        },
     },
 })
 
 // Action creators are generated for each case reducer function
-export const { setVideoIsPlaying, setVideoURL } = VideoPlayerSlice.actions
+export const { setVideoIsPlaying, setPlayingTitle, setVideoURL } = VideoPlayerSlice.actions
 
 export default VideoPlayerSlice.reducer

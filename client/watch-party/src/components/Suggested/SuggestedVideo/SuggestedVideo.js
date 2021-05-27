@@ -3,7 +3,7 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 
 import { useDispatch } from 'react-redux'
-import { setVideoURL } from '../../../redux/VideoPlayerSlice'
+import { setVideoURL, setPlayingTitle } from '../../../redux/VideoPlayerSlice'
 
 import './SuggestedVideo.css'
 
@@ -18,8 +18,10 @@ function SuggestedVideo({ video, socket }) {
     dispatch(setVideoURL({
       videoCode: video.videoCode
     }));
-  }
 
+    dispatch(setPlayingTitle({ playingTitle: video.title }));
+  }
+ 
   return (
     <a onClick={changeVideoHandler}>
       <div className="suggested-video-container">
