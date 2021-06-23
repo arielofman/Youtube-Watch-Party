@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
-import { setRoomId } from '../../redux/RoomSlice'
+import { setRoomId } from 'redux/RoomSlice'
 
-import ChatRoom from '../ChatRoom';
-import VideoPlayer from '../VideoPlayer';
+import ChatRoom from 'components/ChatRoom';
+import VideoPlayer from 'components/VideoPlayer';
 
 import './PartyRoom.css';
 
 import socketio from "socket.io-client";
-import Suggested from '../Suggested';
+import Suggested from 'components/Suggested';
 import Offline from '../Offline';
-import TopBar from '../TopBar/TopBar';
+import TopBar from 'components/TopBar/TopBar';
 
 const SOCKET_URL = "http://localhost:5000";
 let socket = socketio.connect(SOCKET_URL);

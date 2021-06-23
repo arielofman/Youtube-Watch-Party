@@ -1,9 +1,9 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
 import ReactPlayer from 'reactjs-player-v2/youtube'
 
-import { setVideoIsPlaying, setPlayingTitle, setVideoURL } from '../../redux/VideoPlayerSlice'
+import { setVideoIsPlaying, setPlayingTitle, setVideoURL } from 'redux/VideoPlayerSlice'
 
 import './VideoPlayer.css';
 

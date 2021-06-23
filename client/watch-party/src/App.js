@@ -1,8 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 
-import Home from './components/Home/'
-import PartyRoom from './components/PartyRoom'
+import Login from './pages/Login/'
+import PartyRoom from './pages/PartyRoom'
  
 import PrivateRoute from './PrivateRoute';
 
@@ -13,7 +13,7 @@ function App() {
   return (
     <Router>
       <Switch>
-        <Route exact path="/" component={Home} />
+        <Route exact path="/" component={Login} />
         <PrivateRoute path="/:roomId" component={PartyRoom} />
       </Switch>
     </Router>

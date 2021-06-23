@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux' 
  
-import { setUsername } from '../../redux/ChatSlice'; 
+import { setUsername } from 'redux/ChatSlice'; 
 
 import { Link } from "react-router-dom"; 
 
-import './Home.css'  
+import './Login.css'  
 
-function Home(props) { 
+function Login(props) { 
     const dispatch = useDispatch()
 
     const username = useSelector((state) => state.chat.username)
@@ -29,7 +29,7 @@ function Home(props) {
     }, [])
   
     return (
-        <div className="home-container">
+        <div className="login-container">
             <input type="text" placeholder="Enter a user name" value={username}
                 onChange={usernameChangeHandler}
                 autoFocus={true}
@@ -45,4 +45,4 @@ function Home(props) {
     )
 }
 
-export default Home
+export default Login

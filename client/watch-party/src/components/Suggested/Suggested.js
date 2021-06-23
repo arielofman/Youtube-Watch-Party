@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux' 
 
-import { scrapeVideos } from '../../libs/youtubeV3/YoutubeScraper'
-import SuggestedVideo from './SuggestedVideo'
+import { scrapeVideos } from 'libs/youtubeV3/YoutubeScraper'
+import SuggestedVideo from 'components/SuggestedVideo'
 
 import './Suggested.css'
-import VideoSearchBar from './VideoSearchBar'
+import VideoSearchBar from 'components/VideoSearchBar'
 
 function Suggested({ socket }) {
     const [videos, setVideos] = useState([])

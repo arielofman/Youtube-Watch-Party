@@ -1,8 +1,7 @@
 import React from 'react' 
 import { useSelector, useDispatch } from 'react-redux' 
 
-import { setMovieMode } from '../../redux/RoomSlice'
-
+import { setMovieMode } from 'redux/RoomSlice'
 
 import './TopBar.css'
  

@@ -11,7 +11,7 @@ export const VideoPlayerSlice = createSlice({
     },
     reducers: {
         setVideoURL: (state, action) => {
-            state.videoURL = "http://www.youtube.com/watch?v=".concat(action.payload.videoCode)
+            state.videoURL = BASE_URL.concat(action.payload.videoCode)
         },
         setVideoIsPlaying: (state, action) => {
             state.isPlaying = action.payload.playing

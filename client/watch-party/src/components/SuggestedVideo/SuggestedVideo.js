@@ -3,7 +3,7 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 
 import { useDispatch } from 'react-redux'
-import { setVideoURL, setPlayingTitle } from '../../../redux/VideoPlayerSlice'
+import { setVideoURL, setPlayingTitle } from 'redux/VideoPlayerSlice'
 
 import './SuggestedVideo.css'
 

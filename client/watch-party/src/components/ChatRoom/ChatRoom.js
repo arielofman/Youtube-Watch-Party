@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
-import { addMessage, setMessage, setHost } from '../../redux/ChatSlice'; 
+import { addMessage, setMessage, setHost } from 'redux/ChatSlice'; 
 
 import './ChatRoom.css'
 
