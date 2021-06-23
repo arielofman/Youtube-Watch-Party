@@ -3,9 +3,9 @@ import { useSelector, useDispatch } from 'react-redux'
 
 import { addMessage, setMessage, setHost } from 'redux/ChatSlice'; 
 
-import './ChatRoom.css'
+import './ChatBox.css'
 
-function ChatRoom({ socket }) {
+function ChatBox({ socket }) {
     const dispatch = useDispatch()  
 
     const [totalUsers, setTotalUsers] = useState(0);
@@ -73,7 +73,7 @@ function ChatRoom({ socket }) {
     }
 
     return (
-        <div className="chatroom-container">
+        <div className="chatbox-container">
 
             <div className="room-info">
                 <div className="title">
@@ -112,4 +112,4 @@ function ChatRoom({ socket }) {
     )
 }
 
-export default ChatRoom
+export default ChatBox

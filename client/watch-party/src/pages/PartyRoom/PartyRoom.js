@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 
 import { setRoomId } from 'redux/RoomSlice'
 
-import ChatRoom from 'components/ChatRoom';
+import ChatBox from 'components/ChatBox';
 import VideoPlayer from 'components/VideoPlayer';
 
 import './PartyRoom.css';
@@ -55,7 +55,7 @@ function PartyRoom(props) {
                 <TopBar/>
                 <div class="right-container"> 
                     <VideoPlayer socket={socket} />
-                    <ChatRoom socket={socket} />
+                    <ChatBox socket={socket} />
                 </div>
             </div>
             </div>

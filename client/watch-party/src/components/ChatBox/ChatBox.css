@@ -11,7 +11,7 @@
     --button-bg: #0e79f9;
 }
 
-.chatroom-container {
+.chatbox-container {
     height: 100%;
     display: flex;
     flex-direction: column;
