@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 
 import ReactPlayer from 'reactjs-player-v2/youtube'
 
-import { setVideoIsPlaying, setPlayingTitle, setVideoURL } from 'redux/VideoPlayerSlice'
+import { setVideoIsPlaying, setPlayingTitle, setVideoURL, setPlaybackRate } from 'redux/VideoPlayerSlice'
 
 import './VideoPlayer.css';
 
@@ -11,14 +11,17 @@ function VideoPlayer({ socket }) {
     const dispatch = useDispatch()
 
     const [prevCurrTime, setPrevCurrTime] = useState(0)
-    const [currTime, setCurrTime] = useState(0) 
+    const [currTime, setCurrTime] = useState(0)
 
     const remoteControl = useRef(false);
     const playerRef = useRef(null);
 
     const roomId = useSelector((state) => state.room.roomId)
+
     const videoURL = useSelector((state) => state.videoPlayer.videoURL)
-    const isPlaying = useSelector((state) => state.videoPlayer.isPlaying)
+    const isPlaying = useSelector((state) => state.videoPlayer.isPlaying) 
+    const pbRate = useSelector((state) => state.videoPlayer.playbackRate) 
+
     const username = useSelector((state) => state.chat.username)
     const isHost = useSelector((state) => state.chat.host)
 
@@ -68,15 +71,15 @@ function VideoPlayer({ socket }) {
         remoteControl.current = false
     }
 
-    function onProgressHandler() {  
+    function onProgressHandler() {
         setPrevCurrTime(currTime)
         setCurrTime(playerRef.current.getCurrentTime())
 
         const timeDiff = currTime - prevCurrTime
 
         // If the time diff is large enough or negative, there was probably a scrub event
-        // 1.5 = 1 second progress interval + 0.5 threshold 
-        if (timeDiff > 1.5 || timeDiff < 0) {
+        // 1.5 = 1 second progress interval + 0.5 threshold multiplied by playbackRate to account for vid speed
+        if (timeDiff > (1.5 * pbRate) || timeDiff < 0) {
             const newPacket = {
                 username: username,
                 currentTime: playerRef.current.getCurrentTime(),
@@ -85,19 +88,30 @@ function VideoPlayer({ socket }) {
 
             socket.emit("client:seekTo", newPacket);
         }
-    } 
-
-    function onStartHandler() {
-        updateVideoTitle()
     }
 
     function playbackRateChangeHandler() { 
-        console.log("Playback was changed")
+        const currPlaybackRate = playerRef.current.getInternalPlayer().getPlaybackRate()
+        dispatch(setPlaybackRate({ playbackRate: currPlaybackRate }));
+
+        if (remoteControl.current === false) {
+            const newPacket = {
+                roomId: roomId,
+                playbackRate: currPlaybackRate,
+            }; 
+    
+            socket.emit("client:update-playbackRate", newPacket);
+        }
+        remoteControl.current = false
     }
 
-    function videoStateUpdater() {    
-         // request a sync when player is ready
-         if (!isHost) {
+    function onStartHandler() {
+        updateVideoTitle()
+    } 
+
+    function videoStateUpdater() {
+        // request a sync when player is ready
+        if (!isHost) {
             socket.emit("client:request-sync", { roomId });
         }
 
@@ -108,6 +122,7 @@ function VideoPlayer({ socket }) {
             const newPacket = {
                 playing: playerRef.current.props.playing, // using ref cause state wasnt updating inside this func
                 currentTime: playerRef.current.getCurrentTime(),
+                playbackRate: playerRef.current.getInternalPlayer().getPlaybackRate(),
                 roomId: roomId,
             }
             socket.emit("client:host-data", newPacket);
@@ -117,6 +132,7 @@ function VideoPlayer({ socket }) {
         socket.on("server:host-data", (packet) => {
             dispatch(setVideoIsPlaying({ playing: packet.playing }));
             playerRef.current.seekTo(packet.currentTime, 'seconds')
+            dispatch(setPlaybackRate({ playbackRate: packet.playbackRate })); 
         });
 
         socket.on("server:play", () => {
@@ -127,6 +143,11 @@ function VideoPlayer({ socket }) {
         socket.on("server:pause", (packet) => {
             remoteControl.current = true;
             dispatch(setVideoIsPlaying({ playing: false }));
+        });
+
+        socket.on("server:update-playbackRate", (packet) => { 
+            remoteControl.current = true;
+            dispatch(setPlaybackRate({ playbackRate: packet.playbackRate })); 
         });
 
         socket.on("server:seekTo", (packet) => {
@@ -149,13 +170,14 @@ function VideoPlayer({ socket }) {
                 url={videoURL}
                 playing={isPlaying}
                 controls={true}
-                onReady={videoStateUpdater} 
+                playbackRate={pbRate}
+                onReady={videoStateUpdater}
                 onStart={onStartHandler}
                 onPlay={playVideoHandler}
                 onPause={pauseVideoHandler}
                 progressInterval={1000}
-                onProgress={onProgressHandler} 
-                onPlaybackRateChange={playbackRateChangeHandler}/> 
+                onProgress={onProgressHandler}
+                onPlaybackRateChange={playbackRateChangeHandler} />
             {/* <h3>{isHost ? "i am the host!" : "not the host!"}</h3> */}
         </div>
     )

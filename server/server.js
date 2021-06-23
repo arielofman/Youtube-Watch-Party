@@ -40,7 +40,7 @@ http.listen(process.env.PORT || 5000, function () {
 
 io.on('connection', function (socket) {
 
-    socket.on('join', ({ username, roomId }, callback) => { 
+    socket.on('join', ({ username, roomId }, callback) => {
         const user = addUserToRoom(socket.id, username, roomId)
         socket.join(roomId)
 
@@ -52,7 +52,7 @@ io.on('connection', function (socket) {
 
         io.to(roomId).emit('server:total-users', { totalUsers: getTotalUsersInRoom(roomId) }); // emit to all in room
 
-        socket.on("disconnect", () => { 
+        socket.on("disconnect", () => {
             const wasHost = getUserByIdFromRoom(socket.id, roomId).host
 
             deleteUserFromRoom(socket.id, roomId)
@@ -73,19 +73,19 @@ io.on('connection', function (socket) {
         });
     });
 
-    socket.on('client:request-sync', ({ roomId }, callback) => { 
+    socket.on('client:request-sync', ({ roomId }, callback) => {
         io.to(getHostIdFromRoom(roomId)).emit('server:request-host-data');
     });
 
-    socket.on('client:host-data', ({ playing, currentTime, roomId }, callback) => { 
-        socket.to(roomId).emit('server:host-data', { playing, currentTime })
-    }); 
+    socket.on('client:host-data', ({ playing, currentTime, playbackRate, roomId }, callback) => {
+        socket.to(roomId).emit('server:host-data', { playing, currentTime, playbackRate })
+    });
 
-    socket.on('client:video-change', ({ videoCode, roomId }, callback) => { 
+    socket.on('client:video-change', ({ videoCode, roomId }, callback) => {
         socket.to(roomId).emit('server:video-change', { videoCode })
     });
 
-    socket.on('client:seekTo', ({ username, currentTime, roomId }, callback) => { 
+    socket.on('client:seekTo', ({ username, currentTime, roomId }, callback) => {
         socket.to(roomId).emit('server:seekTo', { username, currentTime, isServer: true })
     });
 
@@ -93,11 +93,15 @@ io.on('connection', function (socket) {
         socket.to(roomId).emit('server:message', { username, content, time: getCurrentTime(), isServer })
     });
 
-    socket.on('client:play', ({ roomId }, callback) => { 
-        socket.to(roomId).emit('server:play', {}) 
+    socket.on('client:play', ({ roomId }, callback) => {
+        socket.to(roomId).emit('server:play', {})
     });
 
-    socket.on('client:pause', ({ roomId }, callback) => { 
-        socket.to(roomId).emit('server:pause', {}) 
+    socket.on('client:pause', ({ roomId }, callback) => {
+        socket.to(roomId).emit('server:pause', {})
+    });
+
+    socket.on('client:update-playbackRate', ({ roomId, playbackRate }, callback) => {
+        socket.to(roomId).emit('server:update-playbackRate', { playbackRate })
     });
 })
