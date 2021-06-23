@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
-import ReactPlayer from 'react-player/youtube'
+import ReactPlayer from 'reactjs-player-v2/youtube'
 
 import { setVideoIsPlaying, setPlayingTitle, setVideoURL } from '../../redux/VideoPlayerSlice'
 
@@ -91,6 +91,10 @@ function VideoPlayer({ socket }) {
         updateVideoTitle()
     }
 
+    function playbackRateChangeHandler() { 
+        console.log("Playback was changed")
+    }
+
     function videoStateUpdater() {    
          // request a sync when player is ready
          if (!isHost) {
@@ -150,8 +154,8 @@ function VideoPlayer({ socket }) {
                 onPlay={playVideoHandler}
                 onPause={pauseVideoHandler}
                 progressInterval={1000}
-                onProgress={onProgressHandler} />
-            {/* TODO: handle playback rates */}
+                onProgress={onProgressHandler} 
+                onPlaybackRateChange={playbackRateChangeHandler}/> 
             {/* <h3>{isHost ? "i am the host!" : "not the host!"}</h3> */}
         </div>
     )
