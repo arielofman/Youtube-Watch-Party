@@ -3,6 +3,8 @@ import { useSelector, useDispatch } from 'react-redux'
 
 import { addMessage, setMessage, setHost } from 'redux/ChatSlice'; 
 
+import Identicon from 'react-identicons';
+
 import './ChatBox.css'
 
 function ChatBox({ socket }) {
@@ -19,6 +21,8 @@ function ChatBox({ socket }) {
     
     const ref = React.useRef(null);
 
+    // Randomly chosen foreground colours for profile pic
+    const profileFgPalette = ["#4c96ed", "#ed4ceb", "#4cede7", "#ede517", "#ed5417", "#e52925"]
 
     useEffect(() => {
         if (ref.current) {
@@ -88,7 +92,7 @@ function ChatBox({ socket }) {
                 {messages.map((msg) => (
                     <div className="message-container">
                         <div className="profile">
-                            {msg.isServer ? <img src="systemProfile.jpg" alt=""></img> : <img src="profile1.jpg" alt=""></img>}
+                            {msg.isServer ? <img src="systemProfile.jpg" alt=""></img> : <Identicon palette={profileFgPalette} size={40} bg="#35395e" string={msg.username} />}
                         </div>
                         <div className="message-content">
                             <div className="message-top-content">

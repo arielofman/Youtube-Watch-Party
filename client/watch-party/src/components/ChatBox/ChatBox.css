@@ -57,11 +57,16 @@
     padding-right: 10px;
 }
 
-.profile > img {
+.profile > img, .identicon {
     width: 40px;
     height: 40px;
     border-radius: 13px;
     object-fit: cover;
+}
+
+.identicon { 
+    padding: 10px;
+    background-color: #35395e;
 }
 
 .message-top-content {
