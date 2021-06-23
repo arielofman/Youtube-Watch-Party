@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
-import { addMessage, setMessage, setHost } from 'redux/ChatSlice'; 
+import Message from 'components/Message'
 
-import Identicon from 'react-identicons';
+import { addMessage, setMessage, setHost } from 'redux/ChatSlice';  
 
 import './ChatBox.css'
 
@@ -19,10 +19,7 @@ function ChatBox({ socket }) {
 
     const roomId = useSelector((state) => state.room.roomId)
     
-    const ref = React.useRef(null);
-
-    // Randomly chosen foreground colours for profile pic
-    const profileFgPalette = ["#4c96ed", "#ed4ceb", "#4cede7", "#ede517", "#ed5417", "#e52925"]
+    const ref = React.useRef(null); 
 
     useEffect(() => {
         if (ref.current) {
@@ -88,22 +85,8 @@ function ChatBox({ socket }) {
                 </div>
             </div>
             <div ref={ref} className="messages">
-
-                {messages.map((msg) => (
-                    <div className="message-container">
-                        <div className="profile">
-                            {msg.isServer ? <img src="systemProfile.jpg" alt=""></img> : <Identicon palette={profileFgPalette} size={40} bg="#35395e" string={msg.username} />}
-                        </div>
-                        <div className="message-content">
-                            <div className="message-top-content">
-                                <div className="username">{msg.username ? msg.username : "Unknown"}</div>
-                                <div className="time">{msg.time}</div>
-                            </div>
-                            <div className="message">
-                                {msg.content}
-                            </div>
-                        </div>
-                    </div>
+                {messages.map((msg, index) => (
+                    <Message key={index} msg={msg} />
                 ))}
             </div>
             <form onSubmit={sendMessage}>

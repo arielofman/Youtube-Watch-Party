@@ -16,15 +16,14 @@ function TopBar() {
     }
 
     return (
-        <div class="top-bar">
-          <div class="left-top-bar">
-            <button onClick={movieModeHandler} class="theatre-btn"><i class="fa fa-tv" aria-hidden="true"></i></button>
-            <div class="currently-watching"><span class="bold">Currently Playing:</span> {playingTitle}</div>
+        <div className="top-bar">
+          <div className="left-top-bar">
+            <button onClick={movieModeHandler} className="theatre-btn"><i className="fa fa-tv" aria-hidden="true"></i></button>
+            <div className="currently-watching"><span className="bold">Currently Playing:</span> {playingTitle}</div>
           </div>
-          <div class="profile-container">
-            <img class="profile-pic-img" src="./profile1.jpg" alt=""/>
-            <div class="profile-details">
-               
+          <div className="profile-container">
+            <img className="profile-pic-img" src="./profile1.jpg" alt=""/>
+            <div className="profile-details">
             </div>
           </div>
         </div>

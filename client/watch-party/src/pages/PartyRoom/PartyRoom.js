@@ -48,12 +48,12 @@ function PartyRoom(props) {
 
     return (
         <div className="container">
-            <div class="left-container">
+            <div className="left-container">
                 <Suggested socket={socket} />
            
-            <div class="right-wrapper">
+            <div className="right-wrapper">
                 <TopBar/>
-                <div class="right-container"> 
+                <div className="right-container"> 
                     <VideoPlayer socket={socket} />
                     <ChatBox socket={socket} />
                 </div>

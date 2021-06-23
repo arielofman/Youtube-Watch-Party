@@ -10,9 +10,7 @@
     --button-bg: #0e79f9;
 }
 
-* {
-    min-width: 0;
-    min-height: 0;
+* { 
     box-sizing: border-box;
 }
 
@@ -45,6 +43,7 @@ body {
     display: flex;
     flex-direction: row; 
     height: 100%;
+    min-height: 0;
 }
 
 .right-wrapper { 
