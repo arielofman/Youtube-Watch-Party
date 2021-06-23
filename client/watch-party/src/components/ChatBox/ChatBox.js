@@ -59,6 +59,11 @@ function ChatBox({ socket }) {
     function sendMessage(e) {
         e.preventDefault();
 
+        // ignore empty messages
+        if(message === '') {
+            return
+        }
+        
         const newPacket = {
             username: username,
             content: message,

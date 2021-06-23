@@ -4,6 +4,11 @@ import './VideoSearchBar.css'
 
 function VideoSearchBar({ setSearchQuery }) {
     function onEnterHandler(e) {
+        // ignore empty search query
+        if(e.target.value === '') {
+            return
+        }
+         
         if (e.key === 'Enter') {
             setSearchQuery(e.target.value)
         } 
